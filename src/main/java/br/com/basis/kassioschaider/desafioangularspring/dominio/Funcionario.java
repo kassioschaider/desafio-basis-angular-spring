@@ -1,5 +1,6 @@
 package br.com.basis.kassioschaider.desafioangularspring.dominio;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,13 +15,14 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Funcionario {
 
     @Id @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
-    private LocalDate dataNasciemnto;
+    private LocalDate dataNascimento;
     private String cpf;
     @ManyToOne
     private Empresa empresa;
