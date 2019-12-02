@@ -1,26 +1,28 @@
 package br.com.basis.kassioschaider.desafioangularspring.servico.impl;
 
-import br.com.basis.kassioschaider.desafioangularspring.dominio.Funcionario;
 import br.com.basis.kassioschaider.desafioangularspring.repositorio.FuncionarioRepositorio;
 import br.com.basis.kassioschaider.desafioangularspring.servico.FuncionarioServico;
 import br.com.basis.kassioschaider.desafioangularspring.servico.dto.FuncionarioDTO;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class FuncionarioServicoImpl implements FuncionarioServico {
 
     @Autowired
-    private final FuncionarioRepositorio funcionarioRepositorio;
+    private FuncionarioRepositorio funcionarioRepositorio;
+
 
     @Override
     public List<FuncionarioDTO> obterTodos() {
-        List<Funcionario> funcionarios = funcionarioRepositorio.findAll();
-        return FuncionarioDTO.paraDto(funcionarios);
+//        return funcionarioRepositorio.findAll()
+//                .stream().map(funcionarioMapper::toDto)
+//                .collect(Collectors.toList());
+        return null;
     }
 }

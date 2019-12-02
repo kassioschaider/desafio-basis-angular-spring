@@ -18,7 +18,7 @@ import java.util.List;
 public class FuncionarioRecurso {
 
     @Autowired
-    private final FuncionarioServico funcionarioServico;
+    private FuncionarioServico funcionarioServico;
 
     @GetMapping("/funcionarios")
     public List<FuncionarioDTO> obterTodos() {
