@@ -4,14 +4,12 @@ import br.com.basis.kassioschaider.desafioangularspring.dominio.Empresa;
 import br.com.basis.kassioschaider.desafioangularspring.repositorio.EmpresaRepositorio;
 import br.com.basis.kassioschaider.desafioangularspring.servico.EmpresaServico;
 import br.com.basis.kassioschaider.desafioangularspring.servico.dto.EmpresaDTO;
-import br.com.basis.kassioschaider.desafioangularspring.servico.dto.EmpresaRespostaDTO;
 import br.com.basis.kassioschaider.desafioangularspring.servico.mapper.EmpresaMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
