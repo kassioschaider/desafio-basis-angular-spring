@@ -7,4 +7,10 @@ import java.util.List;
 public interface FuncionarioServico {
 
     List<FuncionarioDTO> obterTodos();
+
+    FuncionarioDTO cadastrar(FuncionarioDTO funcionarioDTO);
+
+    FuncionarioDTO atualizar(FuncionarioDTO funcionarioDTO);
+
+    FuncionarioDTO obterPorId(Long id);
 }

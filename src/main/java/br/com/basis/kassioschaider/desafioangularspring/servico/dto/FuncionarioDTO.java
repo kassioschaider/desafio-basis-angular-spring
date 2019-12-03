@@ -1,24 +1,41 @@
 package br.com.basis.kassioschaider.desafioangularspring.servico.dto;
 
-import br.com.basis.kassioschaider.desafioangularspring.dominio.Funcionario;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.br.CPF;
 
-import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Collectors;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class FuncionarioDTO {
+public class FuncionarioDTO implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
+    @NotNull
     private Long id;
+
+    @NotNull
+    @NotEmpty
+    @Length(min = 3, max = 50)
     private String nome;
-    private LocalDate dataNascimento;
+
+    @NotNull
+    @NotEmpty
+    private String dataNascimento;
+
+    @NotNull
+    @NotEmpty
+    @CPF
     private String cpf;
+
+    @NotNull
     private Long idEmpresa;
 }

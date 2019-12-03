@@ -9,4 +9,8 @@ public interface EmpresaServico {
     List<EmpresaDTO> obterTodos();
 
     EmpresaDTO cadastrar(EmpresaDTO empresaDTO);
+
+    EmpresaDTO atualizar(EmpresaDTO empresaDTO);
+
+    EmpresaDTO obterPorId(Long id);
 }
