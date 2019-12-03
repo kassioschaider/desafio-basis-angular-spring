@@ -57,4 +57,10 @@ public class EmpresaServicoImpl implements EmpresaServico {
 
         return empresaDTO;
     }
+
+    @Override
+    public void excluirPorId(Long id) {
+        empresaRepositorio.deleteById(id);
+        funcionarioRepositorio.deleteByEmpresa_id(id);
+    }
 }

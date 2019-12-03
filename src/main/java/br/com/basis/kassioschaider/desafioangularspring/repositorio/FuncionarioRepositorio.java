@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface FuncionarioRepositorio extends JpaRepository<Funcionario, Long> {
     List<Funcionario> findByEmpresa_id(Long id);
+
+    List<Funcionario> deleteByEmpresa_id(Long id);
 }

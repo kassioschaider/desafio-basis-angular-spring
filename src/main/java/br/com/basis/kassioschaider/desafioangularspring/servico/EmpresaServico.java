@@ -13,4 +13,6 @@ public interface EmpresaServico {
     EmpresaDTO atualizar(EmpresaDTO empresaDTO);
 
     EmpresaDTO obterPorId(Long id);
+
+    void excluirPorId(Long id);
 }

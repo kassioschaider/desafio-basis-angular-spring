@@ -13,4 +13,6 @@ public interface FuncionarioServico {
     FuncionarioDTO atualizar(FuncionarioDTO funcionarioDTO);
 
     FuncionarioDTO obterPorId(Long id);
+
+    void excluirPorId(Long id);
 }

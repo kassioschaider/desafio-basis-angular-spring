@@ -33,12 +33,17 @@ public class FuncionarioServicoImpl implements FuncionarioServico {
 
     @Override
     public FuncionarioDTO atualizar(FuncionarioDTO funcionarioDTO) {
-        Funcionario empresa = funcionarioMapper.toEntity(funcionarioDTO);
-        return funcionarioMapper.toDto(funcionarioRepositorio.save(empresa));
+        Funcionario funcionario = funcionarioMapper.toEntity(funcionarioDTO);
+        return funcionarioMapper.toDto(funcionarioRepositorio.save(funcionario));
     }
 
     @Override
     public FuncionarioDTO obterPorId(Long id) {
         return funcionarioMapper.toDto(funcionarioRepositorio.getOne(id));
+    }
+
+    @Override
+    public void excluirPorId(Long id) {
+        funcionarioRepositorio.deleteById(id);
     }
 }

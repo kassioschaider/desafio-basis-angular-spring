@@ -32,6 +32,7 @@ public class Funcionario {
 
     private String cpf;
 
-    @ManyToOne
+    @ManyToOne(optional = true)
     private Empresa empresa;
 }
+

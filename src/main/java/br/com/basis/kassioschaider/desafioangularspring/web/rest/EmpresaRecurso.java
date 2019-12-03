@@ -5,6 +5,7 @@ import br.com.basis.kassioschaider.desafioangularspring.servico.dto.EmpresaDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -31,6 +33,7 @@ public class EmpresaRecurso {
     }
 
     @PostMapping("/empresas")
+    @Transactional
     public ResponseEntity<EmpresaDTO> cadastrar(@RequestBody @Valid EmpresaDTO empresaDTO, UriComponentsBuilder uriBuilder) {
         EmpresaDTO result = empresaServico.cadastrar(empresaDTO);
         return ResponseEntity.created(uriBuilder.path("/empresas/{id}")
@@ -39,6 +42,7 @@ public class EmpresaRecurso {
     }
 
     @PutMapping("/empresas/{id}")
+    @Transactional
     public ResponseEntity<EmpresaDTO> atualizar(@RequestBody @Valid EmpresaDTO empresaDTO, UriComponentsBuilder uriBuilder) {
         EmpresaDTO result = empresaServico.atualizar(empresaDTO);
         return ResponseEntity.created(uriBuilder.path("empresas/{id}")
@@ -52,5 +56,12 @@ public class EmpresaRecurso {
         return ResponseEntity.created(uriBuilder.path("empresas/{id}")
                 .buildAndExpand(result.getId()).toUri())
                 .body(result);
+    }
+
+    @DeleteMapping("/empresas/{id}")
+    @Transactional
+    public ResponseEntity<?> excluir(@PathVariable Long id, UriComponentsBuilder uriBuilder) {
+        empresaServico.excluirPorId(id);
+        return ResponseEntity.ok().build();
     }
 }

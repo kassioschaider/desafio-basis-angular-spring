@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -32,6 +33,7 @@ public class FuncionarioRecurso {
     }
 
     @PostMapping("/funcionarios")
+    @Transactional
     public ResponseEntity<FuncionarioDTO> cadastrar(@RequestBody @Valid FuncionarioDTO funcionarioDTO, UriComponentsBuilder uriBuilder) {
         FuncionarioDTO result = funcionarioServico.cadastrar(funcionarioDTO);
         return ResponseEntity.created(uriBuilder.path("/funcionarios/{id}")
@@ -40,6 +42,7 @@ public class FuncionarioRecurso {
     }
 
     @PutMapping("/funcionarios/{id}")
+    @Transactional
     public ResponseEntity<FuncionarioDTO> atualizar(@RequestBody @Valid FuncionarioDTO funcionarioDTO, UriComponentsBuilder uriBuilder) {
         FuncionarioDTO result = funcionarioServico.atualizar(funcionarioDTO);
         return ResponseEntity.created(uriBuilder.path("funcionarios/{id}")
@@ -56,11 +59,9 @@ public class FuncionarioRecurso {
     }
 
     @DeleteMapping("/funcionarios/{id}")
-    public ResponseEntity<Void> excluir(@PathVariable Long id, UriComponentsBuilder uriBuilder) {
-//        funcionarioServico.excluirPorId(id);
-//        return ResponseEntity.created(uriBuilder.path("funcionarios/{id}")
-//                .buildAndExpand(id)
-//                .body(result);
-        return null;
+    @Transactional
+    public ResponseEntity<?> excluir(@PathVariable Long id, UriComponentsBuilder uriBuilder) {
+        funcionarioServico.excluirPorId(id);
+        return ResponseEntity.ok().build();
     }
 }
