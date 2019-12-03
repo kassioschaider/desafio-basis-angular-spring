@@ -16,9 +16,7 @@ public interface FuncionarioMapper {
     @Mapping(target = "idEmpresa", source = "empresa.id")
     FuncionarioDTO toDto(Funcionario entity);
 
-//    @Mapping(target = "empresa.id", source = "idEmpresa")
     List<Funcionario> toEntity(List<FuncionarioDTO> funcionarioDTOS);
 
-//    @Mapping(target = "idEmpresa", source = "empresa.id")
     List<FuncionarioDTO> toDto(List<Funcionario> funcionarios);
 }

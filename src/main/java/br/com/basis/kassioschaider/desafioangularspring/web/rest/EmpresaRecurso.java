@@ -60,7 +60,7 @@ public class EmpresaRecurso {
 
     @DeleteMapping("/empresas/{id}")
     @Transactional
-    public ResponseEntity<?> excluir(@PathVariable Long id, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<?> excluir(@PathVariable Long id) {
         empresaServico.excluirPorId(id);
         return ResponseEntity.ok().build();
     }

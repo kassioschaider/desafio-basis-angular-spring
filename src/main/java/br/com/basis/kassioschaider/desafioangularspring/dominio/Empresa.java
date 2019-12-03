@@ -31,6 +31,6 @@ public class Empresa {
 
     private String cnpj;
 
-    @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "empresa", cascade = CascadeType.REMOVE)
     private List<Funcionario> funcionarios = new ArrayList<>();
 }
