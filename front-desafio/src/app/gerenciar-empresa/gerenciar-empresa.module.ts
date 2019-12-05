@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 
-import { GerenciarEmpresaFormComponent } from './gerenciar-empresa-form/gerenciar-empresa-form.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { GerenciarEmpresaListComponent } from './gerenciar-empresa-list/gerenciar-empresa-list.component';
 
 @NgModule({
-  declarations: [GerenciarEmpresaFormComponent],
-  imports: [],
-  exports: [GerenciarEmpresaFormComponent]
+  declarations: [GerenciarEmpresaListComponent],
+  imports: [ReactiveFormsModule],
+  exports: [GerenciarEmpresaListComponent]
 })
 export class GerenciarEmpresaModule {
 

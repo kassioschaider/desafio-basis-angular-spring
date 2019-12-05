@@ -8,15 +8,11 @@ import org.mapstruct.Mapping;
 import java.util.List;
 
 @Mapper(componentModel = "spring", uses = {})
-public interface FuncionarioMapper {
+public interface FuncionarioMapper extends EntityMapper<FuncionarioDTO, Funcionario> {
 
     @Mapping(target = "empresa.id", source = "idEmpresa")
     Funcionario toEntity(FuncionarioDTO dto);
 
     @Mapping(target = "idEmpresa", source = "empresa.id")
     FuncionarioDTO toDto(Funcionario entity);
-
-    List<Funcionario> toEntity(List<FuncionarioDTO> funcionarioDTOS);
-
-    List<FuncionarioDTO> toDto(List<Funcionario> funcionarios);
 }

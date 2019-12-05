@@ -41,11 +41,11 @@ public class FuncionarioRecurso {
                 .body(result);
     }
 
-    @PutMapping("/funcionarios/{id}")
+    @PutMapping("/funcionarios")
     @Transactional
     public ResponseEntity<FuncionarioDTO> atualizar(@RequestBody @Valid FuncionarioDTO funcionarioDTO, UriComponentsBuilder uriBuilder) {
         FuncionarioDTO result = funcionarioServico.atualizar(funcionarioDTO);
-        return ResponseEntity.created(uriBuilder.path("funcionarios/{id}")
+        return ResponseEntity.created(uriBuilder.path("funcionarios")
                 .buildAndExpand(result.getId()).toUri())
                 .body(result);
     }

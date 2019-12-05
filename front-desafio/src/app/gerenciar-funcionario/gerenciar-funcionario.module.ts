@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
-
-import { GerenciarFuncionarioFormComponent } from './gerenciar-funcionario-form/gerenciar-funcionario-form.component';
+import { GerenciarFuncionarioListComponent } from './gerenciar-funcionario-list/gerenciar-funcionario-list.component';
 
 @NgModule({
-  declarations: [GerenciarFuncionarioFormComponent],
+  declarations: [GerenciarFuncionarioListComponent],
   imports: [],
-  exports: [GerenciarFuncionarioFormComponent]
+  exports: [GerenciarFuncionarioListComponent]
 })
 export class GerenciarFuncionarioModule {
 

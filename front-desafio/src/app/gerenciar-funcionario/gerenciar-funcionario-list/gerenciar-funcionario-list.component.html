@@ -1,1 +1,98 @@
-<p>gerenciar-funcionario-list works!</p>
+<button type="button" class="btn btn-outline-success" (click)="showModal=abrirModal()">Abrir Cadastro</button>
+
+<table class="table table-success table-light">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Nome</th>
+      <th scope="col">CPF</th>
+      <th scope="col">Data de Nascimento</th>
+      <th scope="col">Empresa</th>
+      <th scope="col">Ações</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let funcionarioSelecionado of funcionarios">
+      <th>{{funcionarioSelecionado.id}}</th>
+      <td>{{funcionarioSelecionado.nome}}</td>
+      <td>{{funcionarioSelecionado.cpf}}</td>
+      <td>{{funcionarioSelecionado.dataNascimento}}</td>
+      <td>{{funcionarioSelecionado.idEmpresa}}</td>
+      <td>
+        <button type="button" class="btn btn-outline-primary"
+          (click)="showModal=abrirModalComFuncionarioSelecionado(funcionarioSelecionado)">Editar</button>
+        <button type="button" class="btn btn-outline-danger"
+          (click)="showModalDelete=abrirModalConfirmacaoExclusao(funcionarioSelecionado.id)">Excluir</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="modal fade" tabindex="-1" role="dialog" [ngClass]="{'show':showModal}">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h4 class="modal-title">Cadastro de Funcionários</h4>
+      </div>
+
+      <div class="modal-body">
+
+        <form class="form-horizontal" [formGroup]="formulario" (ngSubmit)="onSubmit()">
+
+          <div class="form-group">
+            <label for="nome">Nome</label>
+            <input type="text" class="form-control" id="nome" formControlName="nome" placeholder="Insira o nome">
+            <div *ngIf="verificaValidTouched('nome')" class="alert alert-danger" role="alert">
+              Nome é um campo obigatório! E deve conter entre 3 e 50 caracteres!
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="cpf">CPF</label>
+            <input type="text" class="form-control" id="cpf" formControlName="cpf" placeholder="Insira o CPF">
+            <div *ngIf="verificaValidTouched('cpf')" class="alert alert-danger" role="alert">
+              CPF é um campo obigatório!
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="dataNascimento">Data de Nascimento</label>
+            <input type="text" class="form-control" id="dataNascimento" formControlName="dataNascimento"
+              placeholder="Insira a Data de Nascimento">
+            <div *ngIf="verificaValidTouched('dataNascimento')" class="alert alert-danger" role="alert">
+              Data de Nascimento é um campo obigatório!
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="empresa">Empresas</label>
+            <select class="form-control" type="number" [(ngModel)]="idEmpresa" id="empresa" formControlName="idEmpresa">
+              <option *ngFor="let empresa of empresas" [ngValue]="empresa.id">
+                {{ empresa.nome }}</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-outline-success">Cadastrar</button>
+          <button type="button" class="btn btn-outline-secondary" (click)="showModal=fecharModal()">Cancelar</button>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" [ngClass]="{'show':showModalDelete}">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        Deseja confirmar a exclusão?
+      </div>
+      <div class="modal-body">
+        <button type="button" class="btn btn-outline-success" (click)="showModalDelete=onDelete()">Sim</button>
+        <button type="button" class="btn btn-outline-secondary" (click)="showModalDelete=fecharModal()">Não</button>
+      </div>
+    </div>
+  </div>
+</div>

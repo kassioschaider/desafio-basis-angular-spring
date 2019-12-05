@@ -41,11 +41,11 @@ public class EmpresaRecurso {
             .body(result);
     }
 
-    @PutMapping("/empresas/{id}")
+    @PutMapping("/empresas")
     @Transactional
     public ResponseEntity<EmpresaDTO> atualizar(@RequestBody @Valid EmpresaDTO empresaDTO, UriComponentsBuilder uriBuilder) {
         EmpresaDTO result = empresaServico.atualizar(empresaDTO);
-        return ResponseEntity.created(uriBuilder.path("empresas/{id}")
+        return ResponseEntity.created(uriBuilder.path("empresas")
             .buildAndExpand(result.getId()).toUri())
             .body(result);
     }
