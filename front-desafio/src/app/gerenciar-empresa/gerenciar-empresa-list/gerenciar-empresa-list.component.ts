@@ -3,6 +3,8 @@ import { Empresa } from '../models/empresa.model';
 import { GerenciarEmpresaService } from '../gerenciar-empresa.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ValidateBrService } from 'angular-validate-br';
+import { Funcionario } from 'src/app/gerenciar-funcionario/models/funcionario.model';
 
 @Component({
   selector: 'gerenciar-empresa-list',
@@ -15,10 +17,12 @@ export class GerenciarEmpresaListComponent implements OnInit {
   idEmpresaSelecionadaDelete: number;
   formulario: FormGroup;
   alerta: string = '';
+  funcionariosSelecionados: Funcionario[];
 
   constructor(
     private empresaService: GerenciarEmpresaService,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder,
+    private validateBrService: ValidateBrService) { }
 
   ngOnInit() {
     this.carregarTabelaEmpresas();
@@ -27,7 +31,7 @@ export class GerenciarEmpresaListComponent implements OnInit {
       nome: [null,
         [Validators.min(3), Validators.maxLength(50), Validators.required]],
       cnpj: [null,
-        [Validators.maxLength(14), Validators.required]],
+        [Validators.required, this.validateBrService.cnpj]],
       endereco:
         [null, [Validators.min(3), Validators.required, Validators.maxLength(100)]]
     });
@@ -90,6 +94,13 @@ export class GerenciarEmpresaListComponent implements OnInit {
     this.formulario.controls.nome.setValue(empresaSelecionada.nome);
     this.formulario.controls.cnpj.setValue(empresaSelecionada.cnpj);
     this.formulario.controls.endereco.setValue(empresaSelecionada.endereco);
+    return true;
+  }
+
+  abrirModalExibirFuncionarios(empresaSelecionada) {
+    this.empresaService
+      .obterPorId(empresaSelecionada)
+      .subscribe(dados => this.funcionariosSelecionados = dados.funcionarios);
     return true;
   }
 

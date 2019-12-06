@@ -29,7 +29,7 @@ export class GerenciarEmpresaService {
 
   obterPorId(id: number): Observable<Empresa> {
     return this.http
-      .post(this.resouceUrl + '/' + JSON.stringify(id), this.httpOptions);
+      .get(this.resouceUrl + '/' + JSON.stringify(id), this.httpOptions);
   }
 
   excluirPorId(id: number) {

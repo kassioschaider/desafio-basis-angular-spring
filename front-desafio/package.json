@@ -20,6 +20,7 @@
     "@angular/platform-browser-dynamic": "~8.2.9",
     "@angular/router": "~8.2.9",
     "@types/jquery": "^3.3.31",
+    "angular-validate-br": "0.1.0-beta",
     "bootstrap": "^4.1.1",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",

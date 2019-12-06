@@ -5,6 +5,7 @@ import { GerenciarFuncionarioService } from '../gerenciar-funcionario.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Empresa } from 'src/app/gerenciar-empresa/models/empresa.model';
 import { GerenciarEmpresaService } from 'src/app/gerenciar-empresa/gerenciar-empresa.service';
+import { ValidateBrService } from 'angular-validate-br';
 
 @Component({
   selector: 'gerenciar-funcionario-list',
@@ -22,7 +23,8 @@ export class GerenciarFuncionarioListComponent implements OnInit {
   constructor(
     private funcionarioService: GerenciarFuncionarioService,
     private empresaService: GerenciarEmpresaService,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder,
+    private validateBrService: ValidateBrService) { }
 
   ngOnInit() {
     this.carregarTabelaFuncionarios();
@@ -30,11 +32,13 @@ export class GerenciarFuncionarioListComponent implements OnInit {
     this.formulario = this.formBuilder.group({
       id: [null],
       nome: [null,
-        [Validators.min(3), Validators.maxLength(50), Validators.required]],
+        [Validators.min(3), Validators.maxLength(50), Validators.required,
+        Validators.pattern('^[a-zA-Z]+$')]],
       cpf: [null,
-        [Validators.maxLength(11), Validators.required]],
+        [Validators.maxLength(11), Validators.required,
+        this.validateBrService.cpf]],
       dataNascimento:
-        [null, [Validators.required, Validators.maxLength(8), Validators.min(8)]],
+        [null, [Validators.required]],
       idEmpresa: [null]
     });
   }
@@ -109,10 +113,6 @@ export class GerenciarFuncionarioListComponent implements OnInit {
     this.formulario.reset();
   }
 
-  verificaValidTouched(campo) {
-    return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
-  }
-
   abrirModal() {
     return true;
   }
@@ -120,6 +120,10 @@ export class GerenciarFuncionarioListComponent implements OnInit {
   fecharModal() {
     this.resetarFormulario();
     return false;
+  }
+
+  verificaValidTouched(campo) {
+    return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }
 }
 
