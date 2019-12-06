@@ -24,7 +24,7 @@ public class FuncionarioDTO implements Serializable {
 
     @NotEmpty(message = "Não pode estar vazio!")
     @Length(min = 3, max = 50, message = "O nome deve estar entre 3 e 50 letras!")
-    @Pattern(regexp = "^[A-Za-z]*$", message = "Apenas letras compõe um Nome!")
+    @Pattern(regexp = "^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]*$", message = "Apenas letras compõe um Nome!")
     private String nome;
 
     @NotEmpty(message = "Não pode estar vazio!")

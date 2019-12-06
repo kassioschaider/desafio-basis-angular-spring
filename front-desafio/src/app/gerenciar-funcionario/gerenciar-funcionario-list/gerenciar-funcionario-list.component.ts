@@ -32,7 +32,7 @@ export class GerenciarFuncionarioListComponent implements OnInit {
       id: [null],
       nome: [null,
         [Validators.min(3), Validators.maxLength(50), Validators.required,
-        Validators.pattern('^[a-zA-Z]*$')]],
+        Validators.pattern("^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]*$")]],
       cpf: [null,
         [Validators.maxLength(11), Validators.required,
         this.validateBrService.cpf]],
