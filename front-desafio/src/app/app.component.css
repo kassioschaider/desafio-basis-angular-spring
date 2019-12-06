@@ -1,8 +1,11 @@
 .jumbotron {
   background-color: darkorange;
   font-style: italic;
+  border-radius: 10px;
 }
 
-.navbar{
+.navbar {
   background-color: #e3f2fd;
+  border: 2px solid red;
+  border-radius: 10px;
 }

@@ -20,9 +20,9 @@
       <td>{{funcionarioSelecionado.dataNascimento | date:'d/M/yyyy'}}</td>
       <td>{{funcionarioSelecionado.nomeEmpresa}}</td>
       <td>
-        <button type="button" class="btn btn-outline-primary"
+        <button type="button" class="btn btn-outline-primary btn-sm"
           (click)="showModal=abrirModalComFuncionarioSelecionado(funcionarioSelecionado)">Editar</button>
-        <button type="button" class="btn btn-outline-danger"
+        <button type="button" class="btn btn-outline-danger btn-sm"
           (click)="showModalDelete=abrirModalConfirmacaoExclusao(funcionarioSelecionado.id)">Excluir</button>
       </td>
     </tr>
