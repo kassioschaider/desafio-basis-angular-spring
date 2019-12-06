@@ -26,10 +26,29 @@ public class ErroValidacaoHandler {
         List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
         fieldErrors.forEach(e -> {
             String mensagem = messageSource.getMessage(e, LocaleContextHolder.getLocale());
-            ErroFormularioDTO erro = new ErroFormularioDTO(e.getField(), mensagem);
+            ErroFormularioDTO erro = new ErroFormularioDTO(fieldToTitulo(e.getField()), mensagem);
             dtoList.add(erro);
         });
 
         return dtoList;
+    }
+
+    private String fieldToTitulo(String field) {
+        switch (field) {
+            case "nome":
+                return "Nome";
+            case "dataNascimento":
+                return "Data de Nascimento";
+            case "cpf":
+                return "CPF";
+            case "idEmpresa":
+                return "Empresa";
+            case "endereco":
+                return "Endereço";
+            case "cnpj":
+                return "CNPJ";
+            default:
+                return field;
+        }
     }
 }

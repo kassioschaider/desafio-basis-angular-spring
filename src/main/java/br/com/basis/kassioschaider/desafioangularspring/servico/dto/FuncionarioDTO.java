@@ -9,6 +9,7 @@ import org.hibernate.validator.constraints.br.CPF;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
 @Setter
@@ -21,20 +22,18 @@ public class FuncionarioDTO implements Serializable {
 
     private Long id;
 
-    @NotNull
-    @NotEmpty
-    @Length(min = 3, max = 50)
+    @NotEmpty(message = "Não pode estar vazio!")
+    @Length(min = 3, max = 50, message = "O nome deve estar entre 3 e 50 letras!")
+    @Pattern(regexp = "^[A-Za-z]*$", message = "Apenas letras compõe um Nome!")
     private String nome;
 
-    @NotNull
-    @NotEmpty
+    @NotEmpty(message = "Não pode estar vazio!")
     private String dataNascimento;
 
-    @NotNull
-    @NotEmpty
-    @CPF
+    @NotEmpty(message = "Não pode estar vazio!")
+    @CPF(message = "Foi inserido um inválido!")
     private String cpf;
 
-    @NotNull
+    @NotNull(message = "Precisa inserir uma Empresa para o Funcionário!")
     private Long idEmpresa;
 }

@@ -14,10 +14,10 @@ import { ValidateBrService } from 'angular-validate-br';
 })
 export class GerenciarFuncionarioListComponent implements OnInit {
 
+  formulario: FormGroup;
   funcionarios: Funcionario[];
   empresas: Empresa[];
   idFuncionarioSelecionadoDelete: number;
-  formulario: FormGroup;
   alerta: string = '';
 
   constructor(
@@ -27,13 +27,12 @@ export class GerenciarFuncionarioListComponent implements OnInit {
     private validateBrService: ValidateBrService) { }
 
   ngOnInit() {
-    this.carregarTabelaFuncionarios();
     this.carregarComboEmpresas();
     this.formulario = this.formBuilder.group({
       id: [null],
       nome: [null,
         [Validators.min(3), Validators.maxLength(50), Validators.required,
-        Validators.pattern('^[a-zA-Z]+$')]],
+        Validators.pattern('^[a-zA-Z]*$')]],
       cpf: [null,
         [Validators.maxLength(11), Validators.required,
         this.validateBrService.cpf]],
@@ -43,47 +42,70 @@ export class GerenciarFuncionarioListComponent implements OnInit {
     });
   }
 
-  carregarTabelaFuncionarios() {
-    this.funcionarioService.obterTodos()
-      .subscribe(dados => { this.funcionarios = <Funcionario[]>dados });
-  }
-
   carregarComboEmpresas() {
     this.empresaService.obterTodos()
-      .subscribe(dados => { this.empresas = <Empresa[]>dados });
+      .subscribe(dados => {
+        this.empresas = <Empresa[]>dados;
+        this.carregarTabelaFuncionarios();
+      });
+  }
+
+  carregarTabelaFuncionarios() {
+    this.funcionarioService.obterTodos()
+      .subscribe(dados => {
+        this.funcionarios = <Funcionario[]>dados;
+        this.funcionarios.forEach(f => {
+          f.nomeEmpresa = this.buscarEmpresa(f.idEmpresa);
+        });
+      });
+  }
+
+  buscarEmpresa(idEmpresa: number) {
+    return this.empresas
+      .find(empresa => empresa.id === idEmpresa).nome;
   }
 
   onSubmit() {
     if (!this.formulario.value.id) {
-      this.funcionarioService
-        .cadastrar(this.formulario.value)
-        .subscribe(resposta => {
-          this.funcionarios.push(Object.assign({}, <Funcionario>resposta));
-          alert("Funcionário " + <Funcionario>resposta.nome + " cadastrado com sucesso!");
-          this.resetarFormulario();
-        }, (err: HttpErrorResponse) => {
-          err.error.forEach(e => {
-            this.alerta = this.alerta + e.campo + " - " + e.erro + "\n";
-          })
-          alert(this.alerta);
-          this.alerta = '';
-        });
+      this.onCreate();
     } else {
-      this.funcionarioService
-        .atualizar(this.formulario.value)
-        .subscribe(resposta => {
-          this.funcionarios.push(Object.assign({}, <Funcionario>resposta));
-          this.carregarTabelaFuncionarios();
-          alert("Funcionário " + <Funcionario>resposta.nome + " atualizado com sucesso!");
-          this.resetarFormulario();
-        }, (err: HttpErrorResponse) => {
-          err.error.forEach(e => {
-            this.alerta = this.alerta + e.campo + " - " + e.erro + "\n";
-          })
-          alert(this.alerta);
-          this.alerta = '';
-        });
+      this.onUpdate();
     }
+  }
+
+  onCreate() {
+    this.funcionarioService
+      .cadastrar(this.formulario.value)
+      .subscribe(resposta => {
+        resposta.nomeEmpresa = this.buscarEmpresa(resposta.idEmpresa);
+        this.funcionarios.push(Object.assign({}, <Funcionario>resposta));
+        alert("Funcionário " + <Funcionario>resposta.nome + " cadastrado com sucesso!");
+        this.resetarFormulario();
+      }, (err: HttpErrorResponse) => {
+        err.error.forEach(e => {
+          this.alerta = this.alerta + e.campo + " - " + e.erro + "\n";
+        })
+        alert(this.alerta);
+        this.alerta = '';
+      });
+  }
+
+  onUpdate() {
+    this.funcionarioService
+      .atualizar(this.formulario.value)
+      .subscribe(resposta => {
+        resposta.nomeEmpresa = this.buscarEmpresa(resposta.idEmpresa);
+        this.funcionarios.push(Object.assign({}, <Funcionario>resposta));
+        this.carregarTabelaFuncionarios();
+        alert("Funcionário " + <Funcionario>resposta.nome + " atualizado com sucesso!");
+        this.resetarFormulario();
+      }, (err: HttpErrorResponse) => {
+        err.error.forEach(e => {
+          this.alerta = this.alerta + e.campo + " - " + e.erro + "\n";
+        })
+        alert(this.alerta);
+        this.alerta = '';
+      });
   }
 
   onDelete() {
@@ -126,6 +148,3 @@ export class GerenciarFuncionarioListComponent implements OnInit {
     return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }
 }
-
-
-

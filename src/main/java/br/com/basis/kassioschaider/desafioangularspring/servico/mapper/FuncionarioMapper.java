@@ -5,14 +5,17 @@ import br.com.basis.kassioschaider.desafioangularspring.servico.dto.FuncionarioD
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import java.util.List;
-
+/**
+ * Classe de Mapper FuncionarioMapper
+ */
 @Mapper(componentModel = "spring", uses = {})
 public interface FuncionarioMapper extends EntityMapper<FuncionarioDTO, Funcionario> {
 
-    @Mapping(target = "empresa.id", source = "idEmpresa")
+    @Override
+    @Mapping(source = "idEmpresa", target = "empresa.id")
     Funcionario toEntity(FuncionarioDTO dto);
 
-    @Mapping(target = "idEmpresa", source = "empresa.id")
+    @Override
+    @Mapping(source = "empresa.id", target = "idEmpresa")
     FuncionarioDTO toDto(Funcionario entity);
 }

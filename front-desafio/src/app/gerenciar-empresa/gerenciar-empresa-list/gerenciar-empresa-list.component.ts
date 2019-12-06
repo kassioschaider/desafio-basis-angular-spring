@@ -13,11 +13,11 @@ import { Funcionario } from 'src/app/gerenciar-funcionario/models/funcionario.mo
 })
 export class GerenciarEmpresaListComponent implements OnInit {
 
+  formulario: FormGroup;
   empresas: Empresa[];
   idEmpresaSelecionadaDelete: number;
-  formulario: FormGroup;
-  alerta: string = '';
   funcionariosSelecionados: Funcionario[];
+  alerta: string = '';
 
   constructor(
     private empresaService: GerenciarEmpresaService,
@@ -44,35 +44,43 @@ export class GerenciarEmpresaListComponent implements OnInit {
 
   onSubmit() {
     if (!this.formulario.value.id) {
-      this.empresaService
-        .cadastrar(this.formulario.value)
-        .subscribe(resposta => {
-          this.empresas.push(Object.assign({}, <Empresa>resposta));
-          alert("Empresa " + <Empresa>resposta.nome + " cadastrada com sucesso!");
-          this.resetarFormulario();
-        }, (err: HttpErrorResponse) => {
-          err.error.forEach(e => {
-            this.alerta = this.alerta + e.campo + " - " + e.erro + "\n";
-          })
-          alert(this.alerta);
-          this.alerta = '';
-        });
+      this.onCreate();
     } else {
-      this.empresaService
-        .atualizar(this.formulario.value)
-        .subscribe(resposta => {
-          this.empresas.push(Object.assign({}, <Empresa>resposta));
-          this.carregarTabelaEmpresas();
-          alert("Empresa " + <Empresa>resposta.nome + " atualizada com sucesso!");
-          this.resetarFormulario();
-        }, (err: HttpErrorResponse) => {
-          err.error.forEach(e => {
-            this.alerta = this.alerta + e.campo + " - " + e.erro + "\n";
-          })
-          alert(this.alerta);
-          this.alerta = '';
-        });
+      this.onUpdate();
     }
+  }
+
+  onCreate() {
+    this.empresaService
+      .cadastrar(this.formulario.value)
+      .subscribe(resposta => {
+        this.empresas.push(Object.assign({}, <Empresa>resposta));
+        alert("Empresa " + <Empresa>resposta.nome + " cadastrada com sucesso!");
+        this.resetarFormulario();
+      }, (err: HttpErrorResponse) => {
+        err.error.forEach(e => {
+          this.alerta = this.alerta + e.campo + " - " + e.erro + "\n";
+        })
+        alert(this.alerta);
+        this.alerta = '';
+      });
+  }
+
+  onUpdate() {
+    this.empresaService
+      .atualizar(this.formulario.value)
+      .subscribe(resposta => {
+        this.empresas.push(Object.assign({}, <Empresa>resposta));
+        this.carregarTabelaEmpresas();
+        alert("Empresa " + <Empresa>resposta.nome + " atualizada com sucesso!");
+        this.resetarFormulario();
+      }, (err: HttpErrorResponse) => {
+        err.error.forEach(e => {
+          this.alerta = this.alerta + e.campo + " - " + e.erro + "\n";
+        })
+        alert(this.alerta);
+        this.alerta = '';
+      });
   }
 
   onDelete() {
@@ -108,10 +116,6 @@ export class GerenciarEmpresaListComponent implements OnInit {
     this.formulario.reset();
   }
 
-  verificaValidTouched(campo) {
-    return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
-  }
-
   abrirModal() {
     return true;
   }
@@ -119,5 +123,9 @@ export class GerenciarEmpresaListComponent implements OnInit {
   fecharModal() {
     this.resetarFormulario();
     return false;
+  }
+
+  verificaValidTouched(campo) {
+    return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }
 }
