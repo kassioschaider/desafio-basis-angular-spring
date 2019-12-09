@@ -3,6 +3,7 @@ package br.com.basis.kassioschaider.desafioangularspring.servico;
 import br.com.basis.kassioschaider.desafioangularspring.servico.dto.EmpresaDTO;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface EmpresaServico {
 
@@ -12,7 +13,7 @@ public interface EmpresaServico {
 
     EmpresaDTO atualizar(EmpresaDTO empresaDTO);
 
-    EmpresaDTO obterPorId(Long id);
+    Optional<EmpresaDTO> obterPorId(Long id);
 
     void excluirPorId(Long id);
 }

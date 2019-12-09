@@ -3,6 +3,7 @@ package br.com.basis.kassioschaider.desafioangularspring.servico;
 import br.com.basis.kassioschaider.desafioangularspring.servico.dto.FuncionarioDTO;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface FuncionarioServico {
 
@@ -12,7 +13,7 @@ public interface FuncionarioServico {
 
     FuncionarioDTO atualizar(FuncionarioDTO funcionarioDTO);
 
-    FuncionarioDTO obterPorId(Long id);
+    Optional<FuncionarioDTO> obterPorId(Long id);
 
     void excluirPorId(Long id);
 }

@@ -5,12 +5,12 @@ import br.com.basis.kassioschaider.desafioangularspring.repositorio.EmpresaRepos
 import br.com.basis.kassioschaider.desafioangularspring.servico.EmpresaServico;
 import br.com.basis.kassioschaider.desafioangularspring.servico.dto.EmpresaDTO;
 import br.com.basis.kassioschaider.desafioangularspring.servico.mapper.EmpresaMapper;
-import br.com.basis.kassioschaider.desafioangularspring.servico.mapper.FuncionarioMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -21,9 +21,6 @@ public class EmpresaServicoImpl implements EmpresaServico {
 
     @Autowired
     private EmpresaMapper empresaMapper;
-
-    @Autowired
-    private FuncionarioMapper funcionarioMapper;
 
     @Override
     public List<EmpresaDTO> obterTodos() {
@@ -43,13 +40,8 @@ public class EmpresaServicoImpl implements EmpresaServico {
     }
 
     @Override
-    public EmpresaDTO obterPorId(Long id) {
-        Empresa empresa = empresaRepositorio.getOne(id);
-
-        EmpresaDTO empresaDTO = empresaMapper.toDto(empresa);
-        empresaDTO.setFuncionarios(funcionarioMapper.toDto(empresa.getFuncionarios()));
-
-        return empresaDTO;
+    public Optional<EmpresaDTO> obterPorId(Long id) {
+        return empresaRepositorio.findById(id).map(empresaMapper::toDto);
     }
 
     @Override

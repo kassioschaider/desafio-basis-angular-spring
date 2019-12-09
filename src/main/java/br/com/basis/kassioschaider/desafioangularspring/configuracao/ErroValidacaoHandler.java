@@ -26,14 +26,14 @@ public class ErroValidacaoHandler {
         List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
         fieldErrors.forEach(e -> {
             String mensagem = messageSource.getMessage(e, LocaleContextHolder.getLocale());
-            ErroFormularioDTO erro = new ErroFormularioDTO(fieldToTitulo(e.getField()), mensagem);
+            ErroFormularioDTO erro = new ErroFormularioDTO(fieldToTitle(e.getField()), mensagem);
             dtoList.add(erro);
         });
 
         return dtoList;
     }
 
-    private String fieldToTitulo(String field) {
+    private String fieldToTitle(String field) {
         switch (field) {
             case "nome":
                 return "Nome";

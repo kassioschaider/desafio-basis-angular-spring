@@ -2,6 +2,7 @@ package br.com.basis.kassioschaider.desafioangularspring.web.rest;
 
 import br.com.basis.kassioschaider.desafioangularspring.servico.EmpresaServico;
 import br.com.basis.kassioschaider.desafioangularspring.servico.dto.EmpresaDTO;
+import br.com.basis.kassioschaider.desafioangularspring.util.ResponseUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -45,17 +46,14 @@ public class EmpresaRecurso {
     @Transactional
     public ResponseEntity<EmpresaDTO> atualizar(@RequestBody @Valid EmpresaDTO empresaDTO, UriComponentsBuilder uriBuilder) {
         EmpresaDTO result = empresaServico.atualizar(empresaDTO);
-        return ResponseEntity.created(uriBuilder.path("empresas")
+        return ResponseEntity.created(uriBuilder.path("/empresas")
             .buildAndExpand(result.getId()).toUri())
             .body(result);
     }
 
     @GetMapping("/empresas/{id}")
-    public ResponseEntity<EmpresaDTO> obterPorId(@PathVariable Long id, UriComponentsBuilder uriBuilder) {
-        EmpresaDTO result = empresaServico.obterPorId(id);
-        return ResponseEntity.created(uriBuilder.path("empresas/{id}")
-                .buildAndExpand(result.getId()).toUri())
-                .body(result);
+    public ResponseEntity<EmpresaDTO> obterPorId(@PathVariable Long id) {
+        return ResponseUtil.wrapOrNotFound(empresaServico.obterPorId(id));
     }
 
     @DeleteMapping("/empresas/{id}")

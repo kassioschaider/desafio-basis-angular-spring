@@ -105,10 +105,8 @@ export class GerenciarEmpresaListComponent implements OnInit {
     return true;
   }
 
-  abrirModalExibirFuncionarios(empresaSelecionada) {
-    this.empresaService
-      .obterPorId(empresaSelecionada)
-      .subscribe(dados => this.funcionariosSelecionados = dados.funcionarios);
+  abrirModalExibirFuncionarios(empresaSelecionada: Empresa) {
+    this.funcionariosSelecionados = empresaSelecionada.funcionarios;
     return true;
   }
 

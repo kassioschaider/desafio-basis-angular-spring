@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 @AllArgsConstructor
 public class FuncionarioServicoImpl implements FuncionarioServico {
@@ -38,8 +40,8 @@ public class FuncionarioServicoImpl implements FuncionarioServico {
     }
 
     @Override
-    public FuncionarioDTO obterPorId(Long id) {
-        return funcionarioMapper.toDto(funcionarioRepositorio.getOne(id));
+    public Optional<FuncionarioDTO> obterPorId(Long id) {
+        return funcionarioRepositorio.findById(id).map(funcionarioMapper::toDto);
     }
 
     @Override

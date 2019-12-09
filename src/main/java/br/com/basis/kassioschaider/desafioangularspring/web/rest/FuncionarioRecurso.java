@@ -2,6 +2,7 @@ package br.com.basis.kassioschaider.desafioangularspring.web.rest;
 
 import br.com.basis.kassioschaider.desafioangularspring.servico.FuncionarioServico;
 import br.com.basis.kassioschaider.desafioangularspring.servico.dto.FuncionarioDTO;
+import br.com.basis.kassioschaider.desafioangularspring.util.ResponseUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +37,7 @@ public class FuncionarioRecurso {
     @Transactional
     public ResponseEntity<FuncionarioDTO> cadastrar(@RequestBody @Valid FuncionarioDTO funcionarioDTO, UriComponentsBuilder uriBuilder) {
         FuncionarioDTO result = funcionarioServico.cadastrar(funcionarioDTO);
-        return ResponseEntity.created(uriBuilder.path("/funcionarios/{id}")
+        return ResponseEntity.created(uriBuilder.path("funcionarios/{id}")
                 .buildAndExpand(result.getId()).toUri())
                 .body(result);
     }
@@ -51,16 +52,13 @@ public class FuncionarioRecurso {
     }
 
     @GetMapping("/funcionarios/{id}")
-    public ResponseEntity<FuncionarioDTO> obterPorId(@PathVariable Long id, UriComponentsBuilder uriBuilder) {
-        FuncionarioDTO result = funcionarioServico.obterPorId(id);
-        return ResponseEntity.created(uriBuilder.path("funcionarios/{id}")
-                .buildAndExpand(result.getId()).toUri())
-                .body(result);
+    public ResponseEntity<FuncionarioDTO> obterPorId(@PathVariable Long id) {
+        return ResponseUtil.wrapOrNotFound(funcionarioServico.obterPorId(id));
     }
 
     @DeleteMapping("/funcionarios/{id}")
     @Transactional
-    public ResponseEntity<?> excluir(@PathVariable Long id, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<?> excluir(@PathVariable Long id) {
         funcionarioServico.excluirPorId(id);
         return ResponseEntity.ok().build();
     }
