@@ -11,6 +11,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
+import java.time.LocalDate;
 
 @Setter
 @Getter
@@ -27,8 +28,8 @@ public class FuncionarioDTO implements Serializable {
     @Pattern(regexp = "^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]*$", message = "Apenas letras compõe um Nome!")
     private String nome;
 
-    @NotEmpty(message = "Não pode estar vazio!")
-    private String dataNascimento;
+    @NotNull(message = "Não pode estar vazio!")
+    private LocalDate dataNascimento;
 
     @NotEmpty(message = "Não pode estar vazio!")
     @CPF(message = "Foi inserido um inválido!")

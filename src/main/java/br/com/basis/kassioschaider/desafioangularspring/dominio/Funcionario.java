@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -26,7 +27,7 @@ public class Funcionario {
     private String nome;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
-    private String dataNascimento;
+    private LocalDate dataNascimento;
 
     private String cpf;
 
